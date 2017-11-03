@@ -32,7 +32,7 @@ app.layout = html.Div(children=[
                     y = df[cols].loc[i],
                     name = df.iloc[i][0],
                     marker = go.Marker(
-                        color = 'rgb(, 83, 109)'
+                        color = 'rgb({0}, {1}, {2})'.format(i * 30, i * 15, i * 5)
                     )
                 ) for i in range(0, len(df.index))
             ],
@@ -40,7 +40,7 @@ app.layout = html.Div(children=[
                 title='Planetary Atmospheres',
                 showlegend=True,
                 legend=go.Legend(
-                    x=0,
+                    x=-0.5,
                     y=1.0
                 ),
                 margin=go.Margin(l=40, r=0, t=40, b=30)
