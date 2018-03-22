@@ -68,13 +68,9 @@ app.layout = html.Div(children=[
 def select_chem(chem):
     return {
         'data': [go.Bar(
-            x = df['Object'].loc[i],
-            y = df[chem].loc[i],
-            name = df['Object'].loc[i],
-            marker = go.Marker(
-                color = 'rgb({0}, {1}, {2})'.format(i * 30, i * 15, i * 5)
-            )
-        ) for i in range(0, 12)],
+            x = df['Object'],
+            y = df[chem]
+        )],
         'layout': [go.Layout(
             title='{}'.format(chem),
             showlegend=True,
