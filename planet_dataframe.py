@@ -18,7 +18,7 @@ app = dash.Dash()
 df = pd.read_csv('planet_data.csv', usecols = ['Object','Carbon Dioxide','Nitrogen','Oxygen','Argon','Methane','Sodium','Hydrogen','Helium','Other'])
 df.fillna(0, inplace=True)
 cols = ['Carbon Dioxide','Nitrogen','Oxygen','Argon','Methane','Sodium','Hydrogen','Helium','Other']
-df[cols] = df[cols].replace({'%':'', '<':''}, regex = True)
+df[cols] = df[cols].replace({'%':'', '<':''}, regex = True, inplace = True )
 df[cols] = df[cols].apply(pd.to_numeric)
 
 app.layout = html.Div(children=[
