@@ -9,29 +9,30 @@ Created on Sat Oct 21 09:21:23 2017
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import plotly.graph_objs as go
-
 import pandas as pd
+import plotly.graph_objs as go
 
 app = dash.Dash()
 
-df = pd.read_csv('planet_data.csv', usecols = ['Object','Carbon Dioxide','Nitrogen','Oxygen','Argon','Methane','Sodium','Hydrogen','Helium','Other'])
+df = pd.read_csv('planet_data.csv',
+                 usecols=['Object', 'Carbon Dioxide', 'Nitrogen', 'Oxygen', 'Argon', 'Methane', 'Sodium', 'Hydrogen',
+                          'Helium', 'Other'])
 df.fillna(0, inplace=True)
-cols = ['Carbon Dioxide','Nitrogen','Oxygen','Argon','Methane','Sodium','Hydrogen','Helium','Other']
-df[cols] = df[cols].replace({'%':'', '<':''}, regex = True, inplace = True )
+cols = ['Carbon Dioxide', 'Nitrogen', 'Oxygen', 'Argon', 'Methane', 'Sodium', 'Hydrogen', 'Helium', 'Other']
+df[cols] = df[cols].replace({'%': '', '<': ''}, regex=True, inplace=True)
 df[cols] = df[cols].apply(pd.to_numeric)
 
 app.layout = html.Div(children=[
     dcc.Graph(
-        id = 'planet-atmo-scatter',
-        figure = go.Figure(
-            data = [
+        id='planet-atmo-scatter',
+        figure=go.Figure(
+            data=[
                 go.Bar(
-                    x = cols,
-                    y = df[cols].loc[i],
-                    name = df.iloc[i][0],
-                    marker = go.Marker(
-                        color = 'rgb({0}, {1}, {2})'.format(i * 30, i * 15, i * 5)
+                    x=cols,
+                    y=df[cols].loc[i],
+                    name=df.iloc[i][0],
+                    marker=go.Marker(
+                        color='rgb({0}, {1}, {2})'.format(i * 30, i * 15, i * 5)
                     )
                 ) for i in range(0, len(df.index))
             ],
@@ -60,6 +61,7 @@ app.layout = html.Div(children=[
     ])
 ])
 
+
 # TODO: Fix how the data is hooked up to the callback
 
 @app.callback(
@@ -68,8 +70,8 @@ app.layout = html.Div(children=[
 def select_chem(chem):
     return {
         'data': [go.Bar(
-            x = df['Object'],
-            y = df[chem]
+            x=df['Object'],
+            y=df[chem]
         )],
         'layout': [go.Layout(
             title='{}'.format(chem),
@@ -82,6 +84,7 @@ def select_chem(chem):
         )]
 
     }
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
